@@ -1,3 +1,4 @@
+import org.apache.commons.lang3.ArrayUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -5,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class StateTest {
 
@@ -51,7 +53,16 @@ public class StateTest {
     public void testFindCoordinates() {
         char[][] resultedCharArray = state.convertTo2DCharArray(currentPuzzle);
         char emptyChar = 'E';
-        int[] coordinates = state.findCoordinates(emptyChar);
+        int[] expectedCoordinates = {2,2};
+        int[] actualCoordinates = state.findCoordinates(emptyChar);
+        assertArrayEquals(expectedCoordinates, actualCoordinates);
 
+    }
+
+    @Test
+    public void testFindCharacter() {
+        char[][] resultedCharArray = state.convertTo2DCharArray(currentPuzzle);
+        int x = ArrayUtils.indexOf(thirdLine.toCharArray(), 'E');
+        assertTrue(x != -1);
     }
 }
