@@ -1,6 +1,3 @@
-import com.sun.deploy.net.MessageHeader;
-import jdk.nashorn.internal.IntDeque;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -9,7 +6,7 @@ import java.util.Scanner;
 
 public class Puzzle {
 
-    private static State state;
+    private static State state = new State();
     public static List<String> currentPuzzle = new ArrayList<String>();
 
     public static void main(String[] args) throws FileNotFoundException {
@@ -20,6 +17,9 @@ public class Puzzle {
             String nextLine = scanner.nextLine();
             int lineLength = nextLine.length();
 
+            // Puzzles of invalid length are skipped
+            // Since I know the input I have not accounted for the different ways a puzzle could be inputted such as
+            // incorrect formatting
             switch (lineLength) {
                 case 2: System.out.println("invalid puzzle");
                 break;
@@ -32,6 +32,12 @@ public class Puzzle {
                         System.out.println(line);
                     }
                     System.out.println("\n");
+
+                    List<String> resultPuzzle = state.attemptToSolve(currentPuzzle);
+                    for (String line: resultPuzzle) {
+                        System.out.println(line);
+                    }
+
                     currentPuzzle.clear();
                 break;
 
