@@ -6,6 +6,7 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="3by3-Puzzle" />
         <module name="3by3Puzzle" />
       </profile>
     </annotationProcessing>

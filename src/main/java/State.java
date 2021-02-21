@@ -30,7 +30,16 @@ public class State {
     }
 
     void swapCharacter(char emptyCharacter, char number) {
-        
+        // find the blank square
+        // find the number we want to move it to
+        // check that the blank can be moved to that number
+        // if it can swap them
+
+        int[] coordinatesOfEmpty = findCoordinates(emptyCharacter);
+        int[] coordinatesOfNumber = findCoordinates(number);
+
+        currentState[coordinatesOfEmpty[1]][coordinatesOfEmpty[0]] = number;
+        currentState[coordinatesOfNumber[1]][coordinatesOfNumber[0]] = emptyCharacter;
     }
 
     int[] findCoordinates(char character) {
@@ -50,4 +59,9 @@ public class State {
 
         return coordinates;
     }
+
+    char[][] getCurrentState() {
+        return currentState;
+    }
+
 }

@@ -46,7 +46,19 @@ public class StateTest {
     @Test
     public void testSwapCharacter() {
         char[][] resultedCharArray = state.convertTo2DCharArray(currentPuzzle);
+        secondLine = "45E";
+        thirdLine = "786";
 
+        char[] firstLineChars = firstLine.toCharArray();
+        char[] secondLineChars = secondLine.toCharArray();
+        char[] thirdLineChars = thirdLine.toCharArray();
+
+        state.swapCharacter('E', '6');
+        char[][] actualState = state.getCurrentState();
+
+        assertArrayEquals(actualState[0], firstLineChars);
+        assertArrayEquals(actualState[1], secondLineChars);
+        assertArrayEquals(actualState[2], thirdLineChars);
     }
 
     @Test
