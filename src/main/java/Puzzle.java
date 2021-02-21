@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 public class Puzzle {
 
-    private static State state = new State();
+    private static State initialState;
     public static List<String> currentPuzzle = new ArrayList<String>();
 
     public static void main(String[] args) throws FileNotFoundException {
@@ -32,12 +32,7 @@ public class Puzzle {
                         System.out.println(line);
                     }
                     System.out.println("\n");
-
-                    List<String> resultPuzzle = state.attemptToSolve(currentPuzzle);
-                    for (String line: resultPuzzle) {
-                        System.out.println(line);
-                    }
-
+                    initialState = new State(currentPuzzle);
                     currentPuzzle.clear();
                 break;
 

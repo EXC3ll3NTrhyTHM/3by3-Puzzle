@@ -5,8 +5,7 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertArrayEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class StateTest {
 
@@ -20,7 +19,6 @@ public class StateTest {
 
     @BeforeEach
     private void setup() {
-        state = new State();
         firstLine = "123";
         secondLine = "456";
         thirdLine = "78E";
@@ -29,12 +27,13 @@ public class StateTest {
         currentPuzzle.add(firstLine);
         currentPuzzle.add(secondLine);
         currentPuzzle.add(thirdLine);
+        state = new State(currentPuzzle);
 
     }
 
     @Test
     public void testConvertTo2DCharArray() {
-        char[][] resultedCharArray = state.convertTo2DCharArray(currentPuzzle);
+        char[][] resultedCharArray = state.getCurrentState();
         char[][] expectedCharArray = {
                 firstLine.toCharArray(),
                 secondLine.toCharArray(),
@@ -45,7 +44,6 @@ public class StateTest {
 
     @Test
     public void testSwapCharacter() {
-        char[][] resultedCharArray = state.convertTo2DCharArray(currentPuzzle);
         secondLine = "45E";
         thirdLine = "786";
 
@@ -63,7 +61,6 @@ public class StateTest {
 
     @Test
     public void testFindCoordinates() {
-        char[][] resultedCharArray = state.convertTo2DCharArray(currentPuzzle);
         char emptyChar = 'E';
         int[] expectedCoordinates = {2,2};
         int[] actualCoordinates = state.findCoordinates(emptyChar);
@@ -73,8 +70,14 @@ public class StateTest {
 
     @Test
     public void testFindCharacter() {
-        char[][] resultedCharArray = state.convertTo2DCharArray(currentPuzzle);
         int x = ArrayUtils.indexOf(thirdLine.toCharArray(), 'E');
         assertTrue(x != -1);
+    }
+
+    @Test
+    public void findManhattanDistance() {
+        state.swapCharacter('E', '6');
+        int actual = state.findManhattanDistance('E');
+        assertEquals(1, actual);
     }
 }
