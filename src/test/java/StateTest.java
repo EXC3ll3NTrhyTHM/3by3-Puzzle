@@ -2,7 +2,9 @@ import org.apache.commons.lang3.ArrayUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.awt.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -61,9 +63,8 @@ public class StateTest {
 
     @Test
     public void testFindCoordinates() {
-        char emptyChar = 'E';
         int[] expectedCoordinates = {2,2};
-        int[] actualCoordinates = state.findCoordinates(emptyChar);
+        int[] actualCoordinates = state.findCoordinates('E');
         assertArrayEquals(expectedCoordinates, actualCoordinates);
 
     }
@@ -75,9 +76,34 @@ public class StateTest {
     }
 
     @Test
-    public void findManhattanDistance() {
+    public void testFindManhattanDistance() {
         state.swapCharacter('E', '6');
+        state.swapCharacter('E', '3');
+        state.swapCharacter('E', '2');
         int actual = state.findManhattanDistance('E');
-        assertEquals(1, actual);
+        assertEquals(3, actual);
+    }
+
+    @Test
+    public void testCreateNeighborsForAllCells() {
+        Neighbors neighbors = new Neighbors();
+
+        int[] emptyCoordinates = state.findCoordinates('E');
+        int[] sixCoordinates = state.findCoordinates('6');
+
+        Point sixCoordinatesAsPoint = new Point(sixCoordinates[0], sixCoordinates[1]);
+
+        Point[] neighborsCoordinates = neighbors.getNeighbors(new Point(emptyCoordinates[0], emptyCoordinates[1]));
+
+        boolean result = false;
+
+        for (int i = 0; i < neighborsCoordinates.length; i++) {
+            if (neighborsCoordinates[i].equals(sixCoordinatesAsPoint)) {
+                result = true;
+                break;
+            }
+        }
+
+        assertTrue(result);
     }
 }

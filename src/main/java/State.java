@@ -9,21 +9,10 @@ import static java.lang.Math.abs;
 public class State {
 
     char[][] currentState;
+    
 
     public State(List<String> currentPuzzle) {
         currentState = convertTo2DCharArray(currentPuzzle);
-    }
-
-    public List<String> attemptToSolve(List<String> currentPuzzle) {
-        // convert string list to char array so that the chars may be moved around more easily
-
-        // first index is y value
-        char[][] currentState = convertTo2DCharArray(currentPuzzle);
-
-        List<String> resultPuzzle = new ArrayList<>();
-
-
-        return resultPuzzle;
     }
 
     char[][] convertTo2DCharArray(List<String> currentPuzzle) {
