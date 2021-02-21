@@ -9,10 +9,14 @@ import static java.lang.Math.abs;
 public class State {
 
     char[][] currentState;
-    
+    int depthInTree;
+    State parentState;
 
-    public State(List<String> currentPuzzle) {
+
+    public State(List<String> currentPuzzle, State parent, int depth) {
         currentState = convertTo2DCharArray(currentPuzzle);
+        parentState = parent;
+        depthInTree = depth;
     }
 
     char[][] convertTo2DCharArray(List<String> currentPuzzle) {
@@ -27,11 +31,6 @@ public class State {
     }
 
     void swapCharacter(char emptyCharacter, char number) {
-        // find the blank square
-        // find the number we want to move it to
-        // check that the blank can be moved to that number
-        // if it can swap them
-
         int[] coordinatesOfEmpty = findCoordinates(emptyCharacter);
         int[] coordinatesOfNumber = findCoordinates(number);
 
@@ -104,5 +103,9 @@ public class State {
     char[][] getCurrentState() {
         return currentState;
     }
+
+    State getParentState() {return parentState;}
+
+    int getDepthInTree() {return depthInTree;}
 
 }
