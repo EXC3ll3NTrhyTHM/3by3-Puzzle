@@ -20,10 +20,15 @@ public class Solver {
     }
 
     void expandNode(Node current, Neighbors neighbors) {
-        if (current.state == goalState) {
-            solved = true;
-            return;
-        }
+        // apparently current can be null here
+        if (current.state != null) {
+            if (current.state == goalState) {
+                solved = true;
+                return;
+            }
+        } else return;
+
+
         int[] emptyCoordinates = current.state.findCoordinates('E');
         Point[] neighbors1 = neighbors.getNeighbors(new Point(emptyCoordinates[1], emptyCoordinates[0]));
 
