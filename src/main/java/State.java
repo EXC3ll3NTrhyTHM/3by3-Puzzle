@@ -65,9 +65,7 @@ public class State {
         return coordinates;
     }
 
-    int findManhattanDistance(State currentState) {
-
-        
+    int findManhattanDistance(char c) {
         int[] coordinates = findCoordinates(c);
         int[] goalCoordinates;
 
