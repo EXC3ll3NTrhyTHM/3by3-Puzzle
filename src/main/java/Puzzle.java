@@ -2,16 +2,17 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.PriorityQueue;
 import java.util.Scanner;
 
 public class Puzzle {
 
-    private static Node firstNode;
-    public static List<String> currentPuzzle = new ArrayList<String>();
-    private static Solver solver;
-    private static State goalState;
-
     public static void main(String[] args) throws FileNotFoundException {
+
+        Node firstNode;
+        Solver solver;
+        State goalState;
+        List<String> currentPuzzle = new ArrayList<String>();
 
         String firstLine = "123";
         String secondLine = "456";
@@ -50,12 +51,11 @@ public class Puzzle {
                     System.out.println("\n");
                     firstNode = new Node(new State(currentPuzzle));
                     solver = new Solver(firstNode, goalState);
+                    PriorityQueue<Node> queue = solver.openList;
                     while (!solver.solved) {
-                        if (solver.openList.poll() != null) {
                             // Throws NPE here but Im check for if its null on the above line
-                            Node node = solver.openList.poll();
+                            Node node = queue.poll();
                             solver.expandNode(node, neighbors);
-                        }
                     }
 
 //                    for (int row = 0; row < 3; row++) {

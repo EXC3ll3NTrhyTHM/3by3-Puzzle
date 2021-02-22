@@ -12,7 +12,7 @@ public class Node {
 
     Node(State state) {
         this.state = state;
-        this.parent = null;
+        this.parent = this;
         this.depth = 0;
     }
 
