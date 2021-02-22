@@ -1,6 +1,5 @@
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.PriorityQueue;
 
@@ -28,6 +27,7 @@ public class Solver {
             }
         } else return;
 
+        Node currentNode = openList.poll();
 
         int[] emptyCoordinates = current.state.findCoordinates('E');
         Point[] neighbors1 = neighbors.getNeighbors(new Point(emptyCoordinates[1], emptyCoordinates[0]));
@@ -43,7 +43,6 @@ public class Solver {
             }
         }
     }
-
 
     // Not sure if this works
     boolean stateAlreadyVisited(State state) {
