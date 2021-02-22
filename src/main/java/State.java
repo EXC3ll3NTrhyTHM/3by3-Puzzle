@@ -36,15 +36,12 @@ public class State {
         return charArray;
     }
 
-    State swapCharacter(char emptyCharacter, char number) {
-        State nextState = new State(currentStateInChar, this, depthInTree+1);
-        int[] coordinatesOfEmpty = nextState.findCoordinates(emptyCharacter);
-        int[] coordinatesOfNumber = nextState.findCoordinates(number);
+    void swapCharacter(char emptyCharacter, char number) {
+        int[] coordinatesOfEmpty = findCoordinates(emptyCharacter);
+        int[] coordinatesOfNumber = findCoordinates(number);
 
-        nextState.currentStateInChar[coordinatesOfEmpty[1]][coordinatesOfEmpty[0]] = number;
-        nextState.currentStateInChar[coordinatesOfNumber[1]][coordinatesOfNumber[0]] = emptyCharacter;
-
-        return nextState;
+        currentStateInChar[coordinatesOfEmpty[1]][coordinatesOfEmpty[0]] = number;
+        currentStateInChar[coordinatesOfNumber[1]][coordinatesOfNumber[0]] = emptyCharacter;
     }
 
     int[] findCoordinates(char character) {
@@ -68,7 +65,9 @@ public class State {
         return coordinates;
     }
 
-    int findManhattanDistance(char c) {
+    int findManhattanDistance(State currentState) {
+
+        
         int[] coordinates = findCoordinates(c);
         int[] goalCoordinates;
 
@@ -111,9 +110,9 @@ public class State {
         return verticalDistance + horizontalDistance;
     }
 
-    int findDistanceFromStartingPosition(char c) {
-
-    }
+//    int findDistanceFromStartingPosition(char c) {
+//
+//    }
 
     char[][] getCurrentStateInChar() {
         return currentStateInChar;

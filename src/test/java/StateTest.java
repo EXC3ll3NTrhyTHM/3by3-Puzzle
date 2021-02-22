@@ -52,8 +52,8 @@ public class StateTest {
         char[] secondLineChars = secondLine.toCharArray();
         char[] thirdLineChars = thirdLine.toCharArray();
 
-        State nextState = state.swapCharacter('E', '6');
-        char[][] actualState = nextState.getCurrentStateInChar();
+        state.swapCharacter('E', '6');
+        char[][] actualState = state.getCurrentStateInChar();
 
         assertArrayEquals(actualState[0], firstLineChars);
         assertArrayEquals(actualState[1], secondLineChars);
