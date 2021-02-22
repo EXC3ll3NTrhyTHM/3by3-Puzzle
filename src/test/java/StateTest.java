@@ -4,7 +4,6 @@ import org.junit.jupiter.api.Test;
 
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -35,7 +34,7 @@ public class StateTest {
 
     @Test
     public void testConvertTo2DCharArray() {
-        char[][] resultedCharArray = state.getCurrentState();
+        char[][] resultedCharArray = state.getCurrentStateInChar();
         char[][] expectedCharArray = {
                 firstLine.toCharArray(),
                 secondLine.toCharArray(),
@@ -53,8 +52,8 @@ public class StateTest {
         char[] secondLineChars = secondLine.toCharArray();
         char[] thirdLineChars = thirdLine.toCharArray();
 
-        state.swapCharacter('E', '6');
-        char[][] actualState = state.getCurrentState();
+        State nextState = state.swapCharacter('E', '6');
+        char[][] actualState = nextState.getCurrentStateInChar();
 
         assertArrayEquals(actualState[0], firstLineChars);
         assertArrayEquals(actualState[1], secondLineChars);
@@ -91,9 +90,9 @@ public class StateTest {
         int[] emptyCoordinates = state.findCoordinates('E');
         int[] sixCoordinates = state.findCoordinates('6');
 
-        Point sixCoordinatesAsPoint = new Point(sixCoordinates[0], sixCoordinates[1]);
+        Point sixCoordinatesAsPoint = new Point(sixCoordinates[1], sixCoordinates[0]);
 
-        Point[] neighborsCoordinates = neighbors.getNeighbors(new Point(emptyCoordinates[0], emptyCoordinates[1]));
+        Point[] neighborsCoordinates = neighbors.getNeighbors(new Point(emptyCoordinates[1], emptyCoordinates[0]));
 
         boolean result = false;
 

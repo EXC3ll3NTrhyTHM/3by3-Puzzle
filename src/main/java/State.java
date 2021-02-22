@@ -1,22 +1,28 @@
 import org.apache.commons.lang3.ArrayUtils;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import static java.lang.Math.abs;
 
 public class State {
 
-    char[][] currentState;
+    char[][] currentStateInChar;
     int depthInTree;
     State parentState;
+    // manahttan distance + distance from starting position
+    int weight;
 
 
-    public State(List<String> currentPuzzle, State parent, int depth) {
-        currentState = convertTo2DCharArray(currentPuzzle);
+    public State(char[][] currentPuzzle, State parent, int depth) {
+        currentStateInChar = currentPuzzle;
         parentState = parent;
         depthInTree = depth;
+    }
+
+    public State(List<String> currentPuzzle) {
+        currentStateInChar = convertTo2DCharArray(currentPuzzle);
+        parentState = null;
+        depthInTree = 0;
     }
 
     char[][] convertTo2DCharArray(List<String> currentPuzzle) {
@@ -26,16 +32,19 @@ public class State {
             String strippedOfSpaces = currentPuzzle.get(i).replaceAll(" ", "");
             charArray[i] = strippedOfSpaces.toCharArray();
         }
-        currentState = charArray;
+        currentStateInChar = charArray;
         return charArray;
     }
 
-    void swapCharacter(char emptyCharacter, char number) {
-        int[] coordinatesOfEmpty = findCoordinates(emptyCharacter);
-        int[] coordinatesOfNumber = findCoordinates(number);
+    State swapCharacter(char emptyCharacter, char number) {
+        State nextState = new State(currentStateInChar, this, depthInTree+1);
+        int[] coordinatesOfEmpty = nextState.findCoordinates(emptyCharacter);
+        int[] coordinatesOfNumber = nextState.findCoordinates(number);
 
-        currentState[coordinatesOfEmpty[1]][coordinatesOfEmpty[0]] = number;
-        currentState[coordinatesOfNumber[1]][coordinatesOfNumber[0]] = emptyCharacter;
+        nextState.currentStateInChar[coordinatesOfEmpty[1]][coordinatesOfEmpty[0]] = number;
+        nextState.currentStateInChar[coordinatesOfNumber[1]][coordinatesOfNumber[0]] = emptyCharacter;
+
+        return nextState;
     }
 
     int[] findCoordinates(char character) {
@@ -43,7 +52,7 @@ public class State {
         int verticalValue = -1;
         int horizontalValue = -1;
         for (int i = 0; i < 3; i++) {
-            horizontalValue = ArrayUtils.indexOf(currentState[i], character);
+            horizontalValue = ArrayUtils.indexOf(currentStateInChar[i], character);
 
             if (horizontalValue != -1){
                 verticalValue = i;
@@ -51,8 +60,10 @@ public class State {
             }
 
         }
-        coordinates[1] = horizontalValue;
-        coordinates[0] = verticalValue;
+        // horizontal value is column
+        // vertical value is row
+        coordinates[0] = horizontalValue;
+        coordinates[1] = verticalValue;
 
         return coordinates;
     }
@@ -63,7 +74,7 @@ public class State {
 
         switch (c) {
             case '1':
-                // first number is vertical value second number is horizontal value, oppone
+                // first number is the row second number is the column
                 goalCoordinates = new int[]{0, 0};
                 break;
             case '2':
@@ -100,11 +111,19 @@ public class State {
         return verticalDistance + horizontalDistance;
     }
 
-    char[][] getCurrentState() {
-        return currentState;
+    int findDistanceFromStartingPosition(char c) {
+
+    }
+
+    char[][] getCurrentStateInChar() {
+        return currentStateInChar;
     }
 
     State getParentState() {return parentState;}
+
+    void setParentState(State parent) {
+        parentState = parent;
+    }
 
     int getDepthInTree() {return depthInTree;}
 

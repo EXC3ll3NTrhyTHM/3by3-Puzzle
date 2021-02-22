@@ -9,6 +9,7 @@ public class Puzzle {
     private static State initialState;
     public static List<String> currentPuzzle = new ArrayList<String>();
 
+
     public static void main(String[] args) throws FileNotFoundException {
 
         Scanner scanner = new Scanner(new File("src/main/resources/prog1_input.txt"));
