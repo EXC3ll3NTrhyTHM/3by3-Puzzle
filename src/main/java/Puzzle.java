@@ -6,11 +6,25 @@ import java.util.Scanner;
 
 public class Puzzle {
 
-    private static State initialState;
+    private static Node firstNode;
     public static List<String> currentPuzzle = new ArrayList<String>();
-
+    private static Solver solver;
+    private static State goalState;
 
     public static void main(String[] args) throws FileNotFoundException {
+
+        String firstLine = "123";
+        String secondLine = "456";
+        String thirdLine = "78E";
+
+        List<String> goalStateList = new ArrayList<>();
+
+        goalStateList.add(firstLine);
+        goalStateList.add(secondLine);
+        goalStateList.add(thirdLine);
+        goalState = new State(goalStateList);
+
+        Neighbors neighbors = new Neighbors();
 
         Scanner scanner = new Scanner(new File("src/main/resources/prog1_input.txt"));
         while (scanner.hasNextLine()) {
@@ -28,12 +42,29 @@ public class Puzzle {
                 case 6: currentPuzzle.add(nextLine);
                 break;
 
+                // This is after the final line of the puzzle so I begin solving it
                 case 0:
                     for (String line: currentPuzzle) {
                         System.out.println(line);
                     }
                     System.out.println("\n");
-                    initialState = new State(currentPuzzle);
+                    firstNode = new Node(new State(currentPuzzle));
+                    solver = new Solver(firstNode, goalState);
+                    while (!solver.solved) {
+                        if (solver.openList.poll() != null) {
+                            // Throws NPE here but Im check for if its null on the above line
+                            Node node = solver.openList.poll();
+                            solver.expandNode(node, neighbors);
+                        }
+                    }
+
+//                    for (int row = 0; row < 3; row++) {
+//                        for (int col = 0; col < 3; col++) {
+//                            System.out.println();
+//                        }
+//                    }
+//                    System.out.println();
+                    // print puzzle
                     currentPuzzle.clear();
                 break;
 

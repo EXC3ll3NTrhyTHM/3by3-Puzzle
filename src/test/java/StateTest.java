@@ -79,8 +79,8 @@ public class StateTest {
         state.swapCharacter('E', '6');
         state.swapCharacter('E', '3');
         state.swapCharacter('E', '2');
-        int actual = state.findManhattanDistance('E');
-        assertEquals(3, actual);
+        int actual = state.findManhattanDistance();
+        assertEquals(6, actual);
     }
 
     @Test

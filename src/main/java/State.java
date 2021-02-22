@@ -7,22 +7,10 @@ import static java.lang.Math.abs;
 public class State {
 
     char[][] currentStateInChar;
-    int depthInTree;
-    State parentState;
-    // manahttan distance + distance from starting position
-    int weight;
 
-
-    public State(char[][] currentPuzzle, State parent, int depth) {
-        currentStateInChar = currentPuzzle;
-        parentState = parent;
-        depthInTree = depth;
-    }
 
     public State(List<String> currentPuzzle) {
         currentStateInChar = convertTo2DCharArray(currentPuzzle);
-        parentState = null;
-        depthInTree = 0;
     }
 
     char[][] convertTo2DCharArray(List<String> currentPuzzle) {
@@ -65,47 +53,53 @@ public class State {
         return coordinates;
     }
 
-    int findManhattanDistance(char c) {
-        int[] coordinates = findCoordinates(c);
+    int findManhattanDistance() {
         int[] goalCoordinates;
+        int cost = 0;
 
-        switch (c) {
-            case '1':
-                // first number is the row second number is the column
-                goalCoordinates = new int[]{0, 0};
-                break;
-            case '2':
-                goalCoordinates = new int[]{0, 1};
-                break;
-            case '3':
-                goalCoordinates = new int[]{0, 2};
-                break;
-            case '4':
-                goalCoordinates = new int[]{1, 0};
-                break;
-            case '5':
-                goalCoordinates = new int[]{1, 1};
-                break;
-            case '6':
-                goalCoordinates = new int[]{1, 2};
-                break;
-            case '7':
-                goalCoordinates = new int[]{2, 0};
-                break;
-            case '8':
-                goalCoordinates = new int[]{2, 1};
-                break;
-            case 'E':
-                goalCoordinates = new int[]{2, 2};
-                break;
-            default:
-                throw new IllegalStateException("Unexpected value: " + c);
+        for (int row = 0; row < 3; row++) {
+            for (int column = 0; column < 3; column++) {
+                switch (currentStateInChar[row][column]) {
+                    case '1':
+                        // first number is the row second number is the column
+                        goalCoordinates = new int[]{0, 0};
+                        break;
+                    case '2':
+                        goalCoordinates = new int[]{0, 1};
+                        break;
+                    case '3':
+                        goalCoordinates = new int[]{0, 2};
+                        break;
+                    case '4':
+                        goalCoordinates = new int[]{1, 0};
+                        break;
+                    case '5':
+                        goalCoordinates = new int[]{1, 1};
+                        break;
+                    case '6':
+                        goalCoordinates = new int[]{1, 2};
+                        break;
+                    case '7':
+                        goalCoordinates = new int[]{2, 0};
+                        break;
+                    case '8':
+                        goalCoordinates = new int[]{2, 1};
+                        break;
+                    case 'E':
+                        goalCoordinates = new int[]{2, 2};
+                        break;
+                    default:
+                        throw new IllegalStateException("Unexpected value: " + currentStateInChar[row][column]);
+                }
+
+                int verticalDistance = abs(row - goalCoordinates[0]);
+                int horizontalDistance = abs(column - goalCoordinates[1]);
+
+                cost += verticalDistance + horizontalDistance;
+            }
         }
 
-        int verticalDistance = abs(coordinates[0] - goalCoordinates[0]);
-        int horizontalDistance = abs(coordinates[1] - goalCoordinates[1]);
-
-        return verticalDistance + horizontalDistance;
+        return cost;
     }
 
 //    int findDistanceFromStartingPosition(char c) {
@@ -115,13 +109,5 @@ public class State {
     char[][] getCurrentStateInChar() {
         return currentStateInChar;
     }
-
-    State getParentState() {return parentState;}
-
-    void setParentState(State parent) {
-        parentState = parent;
-    }
-
-    int getDepthInTree() {return depthInTree;}
 
 }
